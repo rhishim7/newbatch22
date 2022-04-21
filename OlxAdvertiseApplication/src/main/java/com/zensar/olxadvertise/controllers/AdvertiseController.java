@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zensar.olxadvertise.entity.Advertise;
@@ -23,6 +22,8 @@ public class AdvertiseController {
 	static {
 		advertises.add(new Advertise(1, "laptop", "54000", "Electronics Goods", "Intel Core 3 Sony Vaio", "anand",
 				"12/12/2022", "13/12/2022", "Open"));
+		advertises.add(new Advertise(2, "Computer", "59000", "Computer Goods", "Intel Core 9 Razor Gaming", "anand",
+				"12/12/202", "13/12/2021", "Open"));
 	}
 
 	@GetMapping("/advertise")
@@ -149,21 +150,20 @@ public class AdvertiseController {
 	
 	//Return advertise details
 	//ExcelSheet no. 14
-	@GetMapping("/advertise/{id}")
-	public List<Advertise> getAllAdvertises(@PathVariable int id,@RequestHeader ("auth-token")String token)
-	{
-		if(token.equals("rm66633"))
-		{
-			for (Advertise advertise1 : advertises)
-				if (advertise1.getAdvertiseId() == id) {
-					return advertises;
-				}
-				else
-				{
-					return null;
-				}
-		}
-		return null;
-	}
-	
+//	@GetMapping("/advertise/{postId2}")
+//	public List<Advertise> getAllAdvertises(@PathVariable int postId2,@RequestHeader ("auth-token")String token)
+//	{
+//		if(token.equals("rm66633"))
+//		{
+//			for (Advertise advertise1 : advertises)
+//				if (advertise1.getAdvertiseId() == postId2) {
+//					return advertises;
+//				}
+//				else
+//				{
+//					return null;
+//				}
+//		}
+//		return null;
+//	}
 }
