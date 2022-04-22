@@ -1,8 +1,8 @@
 package com.zensar.stockapplication.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,18 +14,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zensar.stockapplication.entity.Stock;
+import com.zensar.stockapplication.service.StockService;
 
 @RestController
 @RequestMapping("/stocks") // Pre map the URI/URL to all the mapping's.
 public class StockController {
+	
+	@Autowired
+	private StockService stockService;
 
-	static List<Stock> stocks = new ArrayList<>();
-	static {
-		stocks.add(new Stock(21, "RIL", "BSE", 2160));
-		stocks.add(new Stock(32, "Zensar", "BSE", 530));
-		stocks.add(new Stock(2, "RM", "BSE", 30));
-
-	}
+//	static List<Stock> stocks = new ArrayList<>();
+//	static {
+//		stocks.add(new Stock(21, "RIL", "BSE", 2160));
+//		stocks.add(new Stock(32, "Zensar", "BSE", 530));
+//		stocks.add(new Stock(2, "RM", "BSE", 30));
+//
+//	}
 
 //	public StockController()
 //	{
@@ -38,18 +42,14 @@ public class StockController {
 	//here url is already defined above
 	@GetMapping()
 	public List<Stock> getAllStocks() {
-		return stocks;
+		return stockService.getAllStocks();
 	}
 
 	// Here we are accessing specific stock id using URL
 	//url already added on top /stocks
 	@GetMapping("{stockId}")
 	public Stock getStock(@PathVariable long stockId) {
-		for (Stock stock : stocks)
-			if (stock.getStockId() == stockId) {
-				return stock;
-			}
-		return null;
+		return stockService.getStock(stockId);
 	}
 
 	// another method
@@ -90,8 +90,7 @@ public class StockController {
 	//url already added on top /stocks
 	@PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE},consumes = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
 	public Stock createStock(@RequestBody Stock stock) {
-		stocks.add(stock);
-		return stock;
+		return stockService.createStock(stock);
 	}
 
 //	@PostMapping("/stocks")	
@@ -104,12 +103,8 @@ public class StockController {
 	//url already added on top /stocks
 	@DeleteMapping("/{stockId}")
 	public String deleteStock(@PathVariable("stockId") long stockId) {
-		for (Stock stock : stocks) {
-			stocks.remove(stock);
-			return "Stock Deleted Successfully : " + stockId;
-		}
-		return "Sorry Stock Id is not Available";
-
+		return stockService.deleteStock(stockId);
+		
 	}
 	
 	//delete all stocks
@@ -117,18 +112,14 @@ public class StockController {
 	@DeleteMapping()
 	public String deleteAllStocks()
 	{
-		stocks.removeAll(stocks);
-		return "All Stocks Deleted";
+		return stockService.deleteAllStocks();
 	}
 	
 	// update using put
 	//url already added on top /stocks
 	@PutMapping("/{stockId}")
 	public Stock updateStock(@PathVariable int stockId, @RequestBody Stock stock) {
-		Stock availableStock = getStock(stockId);
-		availableStock.setStockName(stock.getStockName());
-		availableStock.setMarketName(stock.getMarketName());
-		availableStock.setStockPrice(stock.getStockPrice());
-		return availableStock;
+		return stockService.updateStock(stockId, stock);
+		
 	}
 }
