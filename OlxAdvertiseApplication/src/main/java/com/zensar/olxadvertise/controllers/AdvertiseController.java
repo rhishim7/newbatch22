@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,13 +28,13 @@ public class AdvertiseController {
 				"12/12/202", "13/12/2021", "Open"));
 	}
 
-	@GetMapping("/advertise")
+	@GetMapping(value="/advertise",produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
 	public List<Advertise> getAllAdvertises() {
 		return advertises;
 	}
 
 	// Posts new Advertise Excel sheet no. 7
-	@PostMapping("/advertise")
+	@PostMapping(value="/advertise",produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE},consumes = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
 	public Advertise createStock(@RequestBody Advertise advertise, @RequestHeader("auth-token") String token) {
 		if (token.equals("rm66633")) {
 			advertises.add(advertise);
@@ -45,7 +46,7 @@ public class AdvertiseController {
 
 	// Here we are accessing specific stock id using URL
 	// url already added on top /stocks
-	@GetMapping("/advertise/{advertiseId}")
+	@GetMapping(value="/advertise/{advertiseId}",produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
 	public Advertise getAdvertise(@PathVariable long advertiseId) {
 		for (Advertise advertise : advertises)
 			if (advertise.getAdvertiseId() == advertiseId) {
@@ -55,7 +56,7 @@ public class AdvertiseController {
 	}
 
 	// Update existing adv-ertises Excel sheet no. 8
-	@PutMapping("/advertise/{advertiseId}")
+	@PutMapping(value="/advertise/{advertiseId}",produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE},consumes = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
 	public Advertise updateStock(@PathVariable int advertiseId, @RequestBody Advertise advertise) {
 		Advertise availableAdvertise = getAdvertise(advertiseId);
 		availableAdvertise.setAdvertiseTitle(advertise.getAdvertiseTitle());
@@ -67,7 +68,7 @@ public class AdvertiseController {
 	}
 	
 	// Reads all advertisements posted by logged in user Excelsheet No. 9
-	@GetMapping("/user/advertise")
+	@GetMapping(value="/user/advertise",produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
 	public List<Advertise> getAllAdvertisesByUser(@RequestHeader ("auth-token")String token)
 	{
 		if(token.equals("rm66633"))
@@ -81,7 +82,7 @@ public class AdvertiseController {
 	}
 	
 	// Read specific advertisements posted by logged in user Excelsheet No.10
-	@GetMapping("/user/advertise/{postId}")
+	@GetMapping(value="/user/advertise/{postId}",produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE},consumes = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
 	public Advertise getSpecificAdvertise(@PathVariable int postId,@RequestHeader("auth-token")String token)
 	{
 		if(token.equals("rm66633"))
@@ -135,7 +136,7 @@ public class AdvertiseController {
 	
 	// Search advertisements based upon given filter criteria ExcelSheet no.12
 	
-	@GetMapping("/advertise/search/filtercriteria")
+	@GetMapping(value="/advertise/search/filtercriteria",produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
 	public Advertise filterBasedSearchAdvertise()
 	{
 		String filterText = "open";
@@ -153,7 +154,7 @@ public class AdvertiseController {
 	
 	//Matches advertisements using the peovided 'searchText' within all fields of an advertise.
 	//ExcelSheet no. 13
-	@GetMapping("/advertise/search")
+	@GetMapping(value="/advertise/search",produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
 	public Advertise searchAdvertise()
 	{
 		String searchText = "closed";
