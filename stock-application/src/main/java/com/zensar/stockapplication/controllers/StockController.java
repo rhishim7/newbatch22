@@ -19,7 +19,7 @@ import com.zensar.stockapplication.service.StockService;
 @RestController
 @RequestMapping("/stocks") // Pre map the URI/URL to all the mapping's.
 public class StockController {
-	
+	//Here we have autowired with the @Service implementation is StockServiceImpl
 	@Autowired
 	private StockService stockService;
 
