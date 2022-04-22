@@ -2,6 +2,8 @@ package com.zensar.stockapplication.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -86,7 +88,7 @@ public class StockController {
 	// Request Body is used to provide JSON envir body to write a code
 	// ResponseEntity is a class to play with the status code.
 	//url already added on top /stocks
-	@PostMapping()
+	@PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE},consumes = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
 	public Stock createStock(@RequestBody Stock stock) {
 		stocks.add(stock);
 		return stock;
