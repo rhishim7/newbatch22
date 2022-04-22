@@ -2,6 +2,7 @@ package com.zensar.olxadvertise.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -118,34 +119,54 @@ public class AdvertiseController {
 	
 	// Search advertisements based upon given filter criteria ExcelSheet no.12
 	
+//	@GetMapping("/advertise/search/filtercriteria")
+//	public Advertise filterBasedSearchAdvertise()
+//	{
+//		String filterText = "g";
+//			for(Advertise element:advertises)
+//			{
+//				if(element.toString().contains(filterText))
+//				{
+//					return element;
+//				}
+//			}
+//			return null;
+//	}
+	
+	// Search advertisements based upon given filter criteria ExcelSheet no.12
+	
 	@GetMapping("/advertise/search/filtercriteria")
 	public Advertise filterBasedSearchAdvertise()
 	{
-		String filterText = "g";
-			for(Advertise element:advertises)
-			{
-				if(element.toString().contains(filterText))
-				{
-					return element;
-				}
-			}
+		String filterText = "open";
+		Optional<Advertise> findAny = advertises.stream().filter(criteria -> criteria.toString().toLowerCase().contains(filterText)).findAny();
+		if(findAny.isPresent())
+		{
+			return findAny.get();
+		}
+		else
+		{
 			return null;
+		}
+		
 	}
 	
 	//Matches advertisements using the peovided 'searchText' within all fields of an advertise.
 	//ExcelSheet no. 13
 	@GetMapping("/advertise/search")
-	public Advertise SearchAdvertise()
+	public Advertise searchAdvertise()
 	{
-		String searchText = "laptop";
-			for(Advertise element:advertises)
-			{
-				if(element.toString().contains(searchText))
-				{
-					return element;
-				}
-			}
+		String searchText = "closed";
+		Optional<Advertise> findAny = advertises.stream().filter(criteria -> criteria.toString().toLowerCase().contains(searchText)).findAny();
+		if(findAny.isPresent())
+		{
+			return findAny.get();
+		}
+		else
+		{
 			return null;
+		}
+		
 	}
 	
 	//Return advertise details
