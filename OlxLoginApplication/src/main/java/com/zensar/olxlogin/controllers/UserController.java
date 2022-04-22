@@ -3,6 +3,7 @@ package com.zensar.olxlogin.controllers;
 import java.util.*;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,13 +26,13 @@ public class UserController {
 	}
 	
 	// Get All Users
-	@GetMapping
+	@GetMapping(produces = {MediaType.APPLICATION_XML_VALUE,MediaType.APPLICATION_JSON_VALUE})
 	public List<User> getAllUsers() {
 		return users;
 	}
 	
 	// User Authenticate/Login
-	@PostMapping("/authenticate")
+	@PostMapping(value="/authenticate",produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE},consumes = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
 	public ResponseEntity<User> userAuthentication(@RequestBody User user,@RequestHeader ("auth-token") String token){
 		for(User user1 : users)
 		{
@@ -48,7 +49,7 @@ public class UserController {
 	}
 	
 	// Register an User
-	@PostMapping
+	@PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE},consumes = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
 	public User createStock(@RequestBody User user) {
 		users.add(user);
 		return user;
