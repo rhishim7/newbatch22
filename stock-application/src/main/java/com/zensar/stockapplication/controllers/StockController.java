@@ -10,10 +10,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zensar.stockapplication.entity.Stock;
+import com.zensar.stockapplication.entity.StockRequest;
+import com.zensar.stockapplication.entity.StockResponse;
 import com.zensar.stockapplication.service.StockService;
+
 
 @RestController
 @RequestMapping("/stocks") // Pre map the URI/URL to all the mapping's.
@@ -30,23 +34,27 @@ public class StockController {
 //
 //	}
 
-//	public StockController()
-//	{
-//		stocks.add(new Stock(21, "RIL","BSE", 2160));
-//		stocks.add(new Stock(32, "Zensar","BSE", 530));
-//		stocks.add(new Stock(2, "RM","BSE", 30));
-//	}
-
 	// Now we have to map these to url then we use annotation as GETMapping
 	//here url is already defined above
+	// to get page size value http://localhost:9090/?pageSize=
+	//pagination concept is being applied to get all stocks
 	@GetMapping()
-	public List<Stock> getAllStocks() {
-		return stockService.getAllStocks();
+	//swagger@ApiOperation(value="This gives all the stocks available") //changes the method name in swagger
+	//swagger@ApiResponse(code = 200, message = "Succesfully Retrieved")
+	public List<Stock> getAllStocks(@RequestParam(value = "pageNumber",defaultValue = "0", required = false) int pageNumber,@RequestParam(value = "pageSize",defaultValue = "5", required = false) int pageSize,@RequestParam(value = "sortBy",defaultValue = "stockId", required = false) String[] sortBy) {
+		System.out.println(pageSize);
+		return stockService.getAllStocks(pageNumber,pageSize,sortBy);
+	}
+	
+	// http://localhost:9090/stocks/name/Zensar
+	@GetMapping("/name/{stockName}")
+	public List<StockResponse> getStockByName(@PathVariable("stockName") String stockName){
+	return stockService.getStockByName(stockName);
 	}
 
 	// Here we are accessing specific stock id using URL
 	//url already added on top /stocks
-	@GetMapping("{stockId}")
+	@GetMapping("/{stockId}")
 	public Stock getStock(@PathVariable long stockId) {
 		return stockService.getStock(stockId);
 	}
@@ -88,7 +96,7 @@ public class StockController {
 	// ResponseEntity is a class to play with the status code.
 	//url already added on top /stocks
 	@PostMapping()
-	public Stock createStock(@RequestBody Stock stock) {
+	public Stock createStock(@RequestBody StockRequest stock) {
 		return stockService.createStock(stock);
 	}
 
@@ -101,6 +109,7 @@ public class StockController {
 	// delete
 	//url already added on top /stocks
 	@DeleteMapping("/{stockId}")
+	//swagger@ApiOperation(value = "This will delete you a specific stock")
 	public String deleteStock(@PathVariable("stockId") long stockId) {
 		return stockService.deleteStock(stockId);
 		
@@ -117,7 +126,7 @@ public class StockController {
 	// update using put
 	//url already added on top /stocks
 	@PutMapping("/{stockId}")
-	public Stock updateStock(@PathVariable int stockId, @RequestBody Stock stock) {
+	public Stock updateStock(@PathVariable long stockId, @RequestBody Stock stock) {
 		return stockService.updateStock(stockId, stock);
 		
 	}
