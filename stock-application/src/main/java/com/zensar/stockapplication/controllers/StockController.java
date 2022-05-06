@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zensar.stockapplication.entity.Stock;
-import com.zensar.stockapplication.entity.StockRequest;
-import com.zensar.stockapplication.entity.StockResponse;
 import com.zensar.stockapplication.service.StockService;
 
 
@@ -48,7 +46,7 @@ public class StockController {
 	
 	// http://localhost:9090/stocks/name/Zensar
 	@GetMapping("/name/{stockName}")
-	public List<StockResponse> getStockByName(@PathVariable("stockName") String stockName){
+	public List<Stock> getStockByName(@PathVariable("stockName") String stockName){
 	return stockService.getStockByName(stockName);
 	}
 
@@ -96,7 +94,7 @@ public class StockController {
 	// ResponseEntity is a class to play with the status code.
 	//url already added on top /stocks
 	@PostMapping()
-	public Stock createStock(@RequestBody StockRequest stock) {
+	public Stock createStock(@RequestBody Stock stock) {
 		return stockService.createStock(stock);
 	}
 

@@ -12,8 +12,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.zensar.stockapplication.entity.Stock;
-import com.zensar.stockapplication.entity.StockRequest;
-import com.zensar.stockapplication.entity.StockResponse;
 import com.zensar.stockapplication.repository.StockRepository;
 
 @Service
@@ -37,13 +35,13 @@ public class StockServiceImpl implements StockService {
 	}
 	
 	@Override
-	public List<StockResponse> getStockByName(String stockName) {
+	public List<Stock> getStockByName(String stockName) {
 
 		List<Stock> findStockByName = stockRepository.findByStockName(stockName);
-		List<StockResponse> stocks = new ArrayList<StockResponse>();
+		List<Stock> stocks = new ArrayList<Stock>();
 
 		for(Stock st:findStockByName) {
-		stocks.add(modelMapper.map(st, StockResponse.class));
+		stocks.add(modelMapper.map(st, Stock.class));
 		}
 		return stocks;
 
@@ -66,7 +64,7 @@ public class StockServiceImpl implements StockService {
 	}
 
 	@Override
-	public Stock createStock(StockRequest stock) {
+	public Stock createStock(Stock stock) {
 //		stocks.add(stock);
 //		return stock;
 		Stock newStock = new Stock();
