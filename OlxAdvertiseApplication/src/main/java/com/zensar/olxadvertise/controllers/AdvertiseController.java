@@ -39,7 +39,7 @@ public class AdvertiseController {
 	// Here we are accessing specific stock id using URL
 	// url already added on top /stocks
 	@GetMapping(value="/advertise/{advertiseId}",produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})
-	public Advertise getAdvertise(@PathVariable long advertiseId) {
+	public Advertise getAdvertise(@PathVariable int advertiseId) {
 		return advertiseService.getAdvertise(advertiseId);
 	}
 

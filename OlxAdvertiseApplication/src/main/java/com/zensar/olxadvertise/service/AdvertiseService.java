@@ -8,7 +8,7 @@ public interface AdvertiseService {
 
 	public List<Advertise> getAllAdvertises();
 	public Advertise createStock(Advertise advertise,String token);
-	public Advertise getAdvertise(long advertiseId);
+	public Advertise getAdvertise(int advertiseId);
 	public Advertise updateStock(int advertiseId,Advertise advertise);
 	public List<Advertise> getAllAdvertisesByUser(String token);
 	public Advertise getSpecificAdvertise(int postId,String token);
