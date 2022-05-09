@@ -14,7 +14,6 @@ public class StockApplication extends SpringBootServletInitializer{
 	// also added packaging as war in pom.xml
 	public static void main(String[] args) {
 		SpringApplication.run(StockApplication.class, args);
-		System.out.println("HI");
 	}
 	
 	@Bean
