@@ -30,8 +30,8 @@ public class Stock {
 	private String marketName;
 	private double stockPrice;
 	// one2one creates a foreign key column with company_company_id
-	@OneToOne(cascade = CascadeType.ALL)
+	//@OneToOne(cascade = CascadeType.ALL)
 	// custom foreign key column name
 	//@JoinColumn(name = "fk_company_id") 
-	private Company company;
+	//private Company company;
 }

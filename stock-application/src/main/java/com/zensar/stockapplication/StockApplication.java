@@ -6,19 +6,20 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 @SpringBootApplication
-public class StockApplication extends SpringBootServletInitializer{
+@EnableAspectJAutoProxy(proxyTargetClass = true)
+public class StockApplication extends SpringBootServletInitializer {
 // Here we have added extends SpringBootServletInitializer to generate war file 
 	// also we have overridden SpringApplicationBuilder configure from it.
 	// also added packaging as war in pom.xml
 	public static void main(String[] args) {
 		SpringApplication.run(StockApplication.class, args);
 	}
-	
+
 	@Bean
-	public ModelMapper modelMapper()
-	{
+	public ModelMapper modelMapper() {
 		return new ModelMapper();
 	}
 
@@ -26,6 +27,6 @@ public class StockApplication extends SpringBootServletInitializer{
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
 		// TODO Auto-generated method stub
 		return super.configure(builder);
-	}	
+	}
 
 }
